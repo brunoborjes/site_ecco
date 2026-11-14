@@ -2,7 +2,8 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#070B24" />
   <title>ECCO — Um espaço para experimentar a arte | Juiz de Fora/MG</title>
   <meta name="description" content="O Ecco é um espaço independente de arte e experimentação em Juiz de Fora/MG. Aulas, oficinas, teatro, Galeria Subversivos e locação cultural." />
 
@@ -14,11 +15,13 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Faixa superior de status editorial (Pré-publicação) -->
+  <!-- Faixa superior de status editorial (Degradê Oficial da Logo) -->
   <div class="editorial-bar" role="region" aria-label="Status editorial do projeto">
     <div class="container editorial-bar__inner">
-      <span class="editorial-bar__badge">VERSÃO EDITORIAL</span>
-      <p>Conteúdo oficial baseado no Documento-Mestre ECCO. Itens marcados como <strong>[PENDENTE]</strong> aguardam confirmação antes da publicação.</p>
+      <div class="editorial-bar__text">
+        <span class="editorial-bar__badge">VERSÃO EDITORIAL</span>
+        <p>Conteúdo oficial baseado no Documento-Mestre ECCO. Itens marcados como <strong>[PENDENTE]</strong> aguardam confirmação antes da publicação.</p>
+      </div>
       <button type="button" class="editorial-bar__btn" id="openPendenciasBtn">Ver pendências (9)</button>
     </div>
   </div>
@@ -28,7 +31,7 @@
     <div class="container header-inner">
       <a href="#inicio" class="brand-logo" data-route="inicio" aria-label="ECCO — Página Inicial">
         <span class="brand-logo__mark" aria-hidden="true">
-          <!-- Reprodução vetorial fiel do logotipo ECCO com degradê oficial -->
+          <!-- Logotipo ECCO com degradê oficial (#0D1E7A -> #54126B -> #CE121E) e tipografia branca -->
           <svg viewBox="0 0 180 120" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <linearGradient id="eccoBrandGrad" x1="0" y1="60" x2="180" y2="60" gradientUnits="userSpaceOnUse">
@@ -72,6 +75,7 @@
         <span class="mobile-toggle__line"></span>
       </button>
     </div>
+    <div class="header-gradient-line" aria-hidden="true"></div>
   </header>
 
   <!-- Menu Mobile Drawer -->
@@ -157,7 +161,7 @@
       <p>© 2024–2026 ECCO — Espaço de Arte e Experimentação. Fundado em 9 de março de 2024 em Juiz de Fora/MG.</p>
       <div class="footer-bottom__tools">
         <button type="button" class="text-btn" id="openCmsBtn">Gestão de Conteúdo (CMS Local)</button>
-        <span>•</span>
+        <span aria-hidden="true">•</span>
         <button type="button" class="text-btn" id="openPoliciesBtn">Políticas &amp; Pendências</button>
       </div>
     </div>
@@ -168,7 +172,7 @@
     <div class="modal__backdrop" id="modalBackdrop"></div>
     <div class="modal__dialog" role="document">
       <header class="modal__header">
-        <div>
+        <div class="modal__header-text">
           <span class="mono-tag" id="modalEyebrow">ECCO</span>
           <h2 class="modal__title" id="modalTitle">Detalhes</h2>
         </div>

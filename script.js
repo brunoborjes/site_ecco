@@ -839,7 +839,7 @@ const ECCO_DEFAULT_DATA = {
             <article class="modality-block">
               <div>
                 <span class="mono-tag">MODALIDADE</span>
-                <h2 style="font-size: 2.1rem; margin-top: 6px;">${escapeHtml(mod.nome)}</h2>
+                <h2 style="font-size: clamp(1.7rem, 3vw, 2.1rem); margin-top: 6px;">${escapeHtml(mod.nome)}</h2>
                 <p class="modality-block__tagline">${escapeHtml(mod.chamada)}</p>
                 ${mod.paragrafos.map((p) => `<p style="color: var(--ink-secondary);">${escapeHtml(p)}</p>`).join("")}
                 <div style="margin-top: 20px;">
@@ -898,37 +898,39 @@ const ECCO_DEFAULT_DATA = {
                   <strong>${escapeHtml(tab.titulo)}</strong>
                   <span class="pending-tag">[Modalidade a confirmar]</span>
                 </div>
-                <table class="data-table">
-                  <thead>
-                    <tr>
-                      <th>Turma</th>
-                      <th>Dia e horário</th>
-                      <th>Público</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    ${tab.linhas.map((l) => `
+                <div class="table-responsive">
+                  <table class="data-table">
+                    <thead>
                       <tr>
-                        <td><strong>${escapeHtml(l.turma)}</strong></td>
-                        <td>${escapeHtml(l.diaHorario)}</td>
-                        <td>${escapeHtml(l.publico)}</td>
+                        <th>Turma</th>
+                        <th>Dia e horário</th>
+                        <th>Público</th>
                       </tr>
-                    `).join("")}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      ${tab.linhas.map((l) => `
+                        <tr>
+                          <td data-label="Turma"><strong>${escapeHtml(l.turma)}</strong></td>
+                          <td data-label="Dia e horário">${escapeHtml(l.diaHorario)}</td>
+                          <td data-label="Público">${escapeHtml(l.publico)}</td>
+                        </tr>
+                      `).join("")}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             `).join("")}
           </div>
 
           <!-- Chamada Final de Matrícula -->
-          <div class="gradient-banner" style="margin-top: 48px;">
+          <div class="gradient-banner" style="margin-top: 44px;">
             <div>
               <span class="mono-tag">MATRÍCULAS ABERTAS</span>
               <h2>A arte também se aprende fazendo.</h2>
               <p>
                 Entre em contato, conheça nossas turmas e encontre seu espaço para criar no Ecco. <strong>Não existe taxa de matrícula.</strong>
               </p>
-              <p style="font-size: 0.84rem; margin-top: 10px; opacity: 0.85;">
+              <p style="font-size: 0.84rem; margin-top: 10px; opacity: 0.9;">
                 * Observação: Regras específicas de reposição, vencimento e contratação serão confirmadas antes da publicação.
               </p>
             </div>
@@ -1173,7 +1175,7 @@ const ECCO_DEFAULT_DATA = {
         <div class="container tables-split">
           <article class="contact-card">
             <span class="mono-tag">HOMENAGEM E ESPAÇO CÊNICO</span>
-            <h2 style="font-size: 1.9rem; margin: 10px 0 14px;">Sala Iris Alves</h2>
+            <h2 style="font-size: clamp(1.55rem, 3vw, 1.9rem); margin: 10px 0 14px;">Sala Iris Alves</h2>
             <p style="color: var(--ink-secondary);">
               A casa do teatro no Ecco leva o nome de <strong>Iris Alves</strong>, mãe de Daniel Meotte, que também teve participação especial na origem do nome Teatro do Contra.
             </p>
@@ -1191,7 +1193,7 @@ const ECCO_DEFAULT_DATA = {
 
           <article class="contact-card">
             <span class="mono-tag">HORIZONTE 2027</span>
-            <h2 style="font-size: 1.9rem; margin: 10px 0 14px;">Programação em expansão</h2>
+            <h2 style="font-size: clamp(1.55rem, 3vw, 1.9rem); margin: 10px 0 14px;">Programação em expansão</h2>
             <p class="page-hero__subtitle" style="font-size: 1.15rem;">Mais teatro. Mais encontros. Novos públicos.</p>
             <p style="color: var(--ink-secondary);">
               A partir de 2027, o Ecco amplia sua programação e passa a receber também espetáculos de outras companhias.
@@ -1226,7 +1228,7 @@ const ECCO_DEFAULT_DATA = {
           </div>
 
           <!-- Chamada para Companhias -->
-          <div class="gradient-banner" style="margin-top: 48px;">
+          <div class="gradient-banner" style="margin-top: 44px;">
             <div>
               <span class="mono-tag">CONVOCATÓRIA PERMANENTE</span>
               <h2>Apresente seu espetáculo no Ecco</h2>
@@ -1302,8 +1304,8 @@ const ECCO_DEFAULT_DATA = {
                   label: ex.fotoLabel,
                   recommendation: ex.fotoRecomendacao
                 })}
-                <h3 style="font-size: 1.5rem; margin: 18px 0 8px;">${escapeHtml(ex.titulo)}</h3>
-                <p style="font-weight: 600; color: var(--ecco-purple); margin: 0 0 12px;">${escapeHtml(ex.subtitulo)}</p>
+                <h3 style="font-size: 1.45rem; margin: 18px 0 8px;">${escapeHtml(ex.titulo)}</h3>
+                <p style="font-weight: 600; color: var(--accent-purple-light); margin: 0 0 12px;">${escapeHtml(ex.subtitulo)}</p>
                 <p style="color: var(--ink-secondary);">${escapeHtml(ex.descricao)}</p>
                 <p class="mono-small" style="margin-top: 12px;">${escapeHtml(ex.periodo)}</p>
                 <p class="mono-small">Artistas: ${escapeHtml(ex.artistas)}</p>
@@ -1313,7 +1315,7 @@ const ECCO_DEFAULT_DATA = {
             <article class="contact-card" style="display: flex; flex-direction: column; justify-content: space-between;">
               <div>
                 <span class="mono-tag">CHAMADA PARA ARTISTAS</span>
-                <h3 style="font-size: 1.65rem; margin: 10px 0 14px;">Exponha na Subversivos</h3>
+                <h3 style="font-size: 1.6rem; margin: 10px 0 14px;">Exponha na Subversivos</h3>
                 <p style="color: var(--ink-secondary);">
                   É artista e gostaria de expor na Subversivos? A galeria recebe propostas de artistas, com atenção especial à produção de Juiz de Fora e a quem está começando sua trajetória. Envie seu portfólio e uma apresentação do projeto para nossa curadoria.
                 </p>
@@ -1322,7 +1324,7 @@ const ECCO_DEFAULT_DATA = {
                   <p>Critérios de seleção, calendário de exposições e regras de comercialização estão em fase final de definição.</p>
                 </div>
               </div>
-              <button type="button" class="btn btn--primary" data-proposta="exposicao">
+              <button type="button" class="btn btn--primary" style="width: 100%;" data-proposta="exposicao">
                 ENVIE SUA PROPOSTA DE EXPOSIÇÃO
               </button>
             </article>
@@ -1423,7 +1425,7 @@ const ECCO_DEFAULT_DATA = {
           <!-- Estrutura e Condições -->
           <div class="contact-card">
             <span class="mono-tag">ESTRUTURA E CONDIÇÕES</span>
-            <h2 style="font-size: 1.85rem; margin: 10px 0 18px;">O que está incluído</h2>
+            <h2 style="font-size: clamp(1.55rem, 3vw, 1.85rem); margin: 10px 0 18px;">O que está incluído</h2>
             <ul class="contact-list">
               <li>
                 <strong>Capacidade</strong>
@@ -1460,22 +1462,24 @@ const ECCO_DEFAULT_DATA = {
                 <strong>Valores de locação por hora</strong>
                 <span class="mono-tag">TABELA OFICIAL</span>
               </div>
-              <table class="data-table">
-                <thead>
-                  <tr>
-                    <th>Dia</th>
-                    <th>Valor por hora</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${valoresLocacao.map((v) => `
+              <div class="table-responsive">
+                <table class="data-table">
+                  <thead>
                     <tr>
-                      <td><strong>${escapeHtml(v.dia)}</strong></td>
-                      <td><strong>${escapeHtml(v.valorHora)}</strong></td>
+                      <th>Dia</th>
+                      <th>Valor por hora</th>
                     </tr>
-                  `).join("")}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody>
+                    ${valoresLocacao.map((v) => `
+                      <tr>
+                        <td data-label="Dia"><strong>${escapeHtml(v.dia)}</strong></td>
+                        <td data-label="Valor por hora"><strong>${escapeHtml(v.valorHora)}</strong></td>
+                      </tr>
+                    `).join("")}
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             <div class="contact-card" style="margin-top: 24px;">
@@ -1612,7 +1616,7 @@ const ECCO_DEFAULT_DATA = {
                   <p>${escapeHtml(item.resumo)}</p>
                   <span class="mono-small" style="display: inline-block; margin-top: 8px;">${escapeHtml(item.valor)}</span>
                 </div>
-                <div>
+                <div class="agenda-row__action">
                   ${item.tipo === "oficina" ? `
                     <button type="button" class="btn btn--primary btn--sm" data-detail-type="oficina" data-item-id="${escapeHtml(item.id)}">
                       ${escapeHtml(item.acaoLabel)} →
@@ -1656,7 +1660,7 @@ const ECCO_DEFAULT_DATA = {
         <div class="container contact-grid">
           <div class="contact-card">
             <span class="mono-tag">INFORMAÇÕES OFICIAIS</span>
-            <h2 style="font-size: 1.8rem; margin: 8px 0 16px;">Onde estamos e canais</h2>
+            <h2 style="font-size: clamp(1.5rem, 3vw, 1.8rem); margin: 8px 0 16px;">Onde estamos e canais</h2>
 
             <ul class="contact-list">
               <li>
@@ -1790,7 +1794,7 @@ const ECCO_DEFAULT_DATA = {
   }
 
   /* --------------------------------------------------------------------------
-     ESTRUTURA DE CHECKOUT (PIX, CRÉDITO, DÉBITO) — SEM SIMULAÇÃO FALSA
+     ESTRUTURA DE CHECKOUT (PIX, CRÉDITO, DÉBITO)
      -------------------------------------------------------------------------- */
   function openCheckoutModal(type, id) {
     let itemTitle = "";
@@ -1842,7 +1846,7 @@ const ECCO_DEFAULT_DATA = {
             </div>
           </div>
 
-          <label style="display: block; font-size: 0.84rem; font-weight: 600; margin-top: 6px;">Meio de pagamento desejado *</label>
+          <label style="display: block; font-size: 0.84rem; font-weight: 600; color: var(--ink-secondary); margin-top: 6px;">Meio de pagamento desejado *</label>
           <div class="payment-methods">
             <label class="payment-option">
               <input type="radio" name="payMethod" value="Pix" checked />
@@ -1896,12 +1900,12 @@ const ECCO_DEFAULT_DATA = {
       };
 
       document.getElementById("checkoutGatewayResult").innerHTML = `
-        <div class="editorial-notice" style="border-left-color: var(--ecco-red);">
+        <div class="editorial-notice">
           <strong>Integração de Pagamento Pendente de Configuração</strong>
           <p>
             Seu pedido foi validado e estruturado para <strong>${escapeHtml(method)}</strong>, mas a plataforma oficial de pagamentos (Pix, Crédito e Débito) e a política de cancelamento/reembolso ainda estão sendo configuradas pela equipe do Ecco. Nenhuma cobrança foi realizada.
           </p>
-          <pre style="margin-top: 12px; padding: 12px; background: var(--bg-paper); border-radius: 6px; font-family: var(--font-mono); font-size: 0.74rem; overflow-x: auto;">${escapeHtml(JSON.stringify(payload, null, 2))}</pre>
+          <pre style="margin-top: 12px; padding: 12px; border-radius: 6px; font-family: var(--font-mono); font-size: 0.74rem; overflow-x: auto;">${escapeHtml(JSON.stringify(payload, null, 2))}</pre>
         </div>
       `;
     });
@@ -1929,7 +1933,7 @@ const ECCO_DEFAULT_DATA = {
             Abrir conversa no WhatsApp oficial
           </a>
         ` : `
-          <div class="editorial-notice" style="border-left-color: var(--ecco-red);">
+          <div class="editorial-notice">
             <strong>[PENDENTE] Número oficial do WhatsApp ainda não informado</strong>
             <p>
               Conforme o Documento-Mestre, o número oficial de WhatsApp do Ecco será inserido antes da publicação (via <code>ECCO_DEFAULT_DATA</code> no <code>script.js</code> ou no Gestor de Conteúdo). Você já pode copiar a mensagem preparada acima.
@@ -1993,7 +1997,7 @@ const ECCO_DEFAULT_DATA = {
     document.getElementById("propostaForm").addEventListener("submit", (e) => {
       e.preventDefault();
       document.getElementById("propostaResult").innerHTML = `
-        <div class="editorial-notice" style="border-left-color: var(--ecco-red);">
+        <div class="editorial-notice">
           <strong>Canal Oficial de Recebimento Pendente</strong>
           <p>
             O Documento-Mestre sinaliza que o canal definitivo de recebimento de propostas (e-mail curatorial ou formulário integrado) será confirmado antes da publicação. Sua proposta foi validada localmente e está pronta para envio assim que o canal for conectado.
@@ -2211,6 +2215,7 @@ const ECCO_DEFAULT_DATA = {
   function openMobileDrawer() {
     mobileDrawer.classList.add("is-open");
     mobileDrawer.setAttribute("aria-hidden", "false");
+    mobileMenuBtn.classList.add("is-active");
     mobileMenuBtn.setAttribute("aria-expanded", "true");
     document.body.style.overflow = "hidden";
   }
@@ -2218,11 +2223,18 @@ const ECCO_DEFAULT_DATA = {
   function closeMobileDrawer() {
     mobileDrawer.classList.remove("is-open");
     mobileDrawer.setAttribute("aria-hidden", "true");
+    mobileMenuBtn.classList.remove("is-active");
     mobileMenuBtn.setAttribute("aria-expanded", "false");
     document.body.style.overflow = "";
   }
 
-  mobileMenuBtn.addEventListener("click", openMobileDrawer);
+  mobileMenuBtn.addEventListener("click", () => {
+    if (mobileDrawer.classList.contains("is-open")) {
+      closeMobileDrawer();
+    } else {
+      openMobileDrawer();
+    }
+  });
   document.getElementById("mobileCloseBtn").addEventListener("click", closeMobileDrawer);
   document.getElementById("mobileDrawerBackdrop").addEventListener("click", closeMobileDrawer);
 
