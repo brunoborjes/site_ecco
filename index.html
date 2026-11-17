@@ -52,20 +52,15 @@
     <div class="header-gradient-line" aria-hidden="true"></div>
     <div class="container header-inner">
       <a href="#inicio" data-route="inicio" class="brand-logo" aria-label="ECCO — Página Inicial">
-        <span class="brand-logo__mark" aria-hidden="true">
-          <svg viewBox="0 0 120 80" width="54" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="eccoLogoGrad" x1="0" y1="0" x2="120" y2="80" gradientUnits="userSpaceOnUse">
-                <stop offset="0%" stop-color="#0D1E7A" />
-                <stop offset="52%" stop-color="#54126B" />
-                <stop offset="100%" stop-color="#CE121E" />
-              </linearGradient>
-            </defs>
-            <rect width="120" height="80" fill="url(#eccoLogoGrad)" />
-            <circle cx="34" cy="40" r="16" stroke="#FFFFFF" stroke-width="4" />
-            <path d="M58 26H86M58 40H80M58 54H86" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" />
-            <circle cx="96" cy="40" r="5" fill="#FFFFFF" />
-          </svg>
+        <span class="brand-logo__mark">
+          <img
+            id="headerLogoImg"
+            src="logo-ecco.png"
+            alt="Logotipo ECCO — Um espaço para experimentar a arte"
+            class="brand-logo__img"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-flex';"
+          />
+          <span class="brand-logo__fallback" aria-hidden="true">ECCO</span>
         </span>
         <span class="brand-logo__text">
           <strong>ECCO</strong>

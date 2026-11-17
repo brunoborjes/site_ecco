@@ -6,6 +6,7 @@ const ECCO_DEFAULT_DATA = {
   // 1. Configurações Institucionais e Integrações (Preencher quando confirmadas)
   config: {
     nome: "ECCO",
+    logoUrl: "logo-ecco.png", // Caminho ou nome do arquivo da logo oficial do ECCO
     conceito: "Um espaço para experimentar a arte.",
     chamadaPrincipal: "Um espaço onde a arte encontra pessoas, ideias e experiências.",
     dataFundacao: "9 de março de 2024",
@@ -322,6 +323,22 @@ const ECCO_DEFAULT_DATA = {
     agendaFiltro: "Todos",
     agendaPeriodo: "proximas"
   };
+
+  /* --------------------------------------------------------------------------
+     SINCRONIZA ARQUIVO DA LOGO NO CABEÇALHO
+     -------------------------------------------------------------------------- */
+  function syncHeaderLogo() {
+    const logoImg = document.getElementById("headerLogoImg");
+    if (logoImg && state.data.config && state.data.config.logoUrl) {
+      logoImg.style.display = "block";
+      if (logoImg.nextElementSibling) {
+        logoImg.nextElementSibling.style.display = "none";
+      }
+      logoImg.src = state.data.config.logoUrl;
+    }
+  }
+
+  syncHeaderLogo();
 
   /* --------------------------------------------------------------------------
      GERENCIADOR DE TEMA (ESCURO / BRANCO COM CORES DA LOGO)
@@ -2087,9 +2104,15 @@ const ECCO_DEFAULT_DATA = {
             <input type="text" id="cmsWhatsapp" value="${escapeHtml(config.whatsappNumero)}" placeholder="Ex: 5532999999999" />
           </div>
         </div>
-        <div class="form-field">
-          <label>E-mail Institucional</label>
-          <input type="email" id="cmsEmail" value="${escapeHtml(config.emailOficial)}" placeholder="contato@..." />
+        <div class="form-grid">
+          <div class="form-field">
+            <label>E-mail Institucional</label>
+            <input type="email" id="cmsEmail" value="${escapeHtml(config.emailOficial)}" placeholder="contato@..." />
+          </div>
+          <div class="form-field">
+            <label>Arquivo da Logo Oficial</label>
+            <input type="text" id="cmsLogoUrl" value="${escapeHtml(config.logoUrl || "logo-ecco.png")}" placeholder="logo-ecco.png" />
+          </div>
         </div>
 
         <h3 style="font-size: 1.12rem; margin: 22px 0 10px;">2. Adicionar Nova Oficina Mensal</h3>
@@ -2134,6 +2157,7 @@ const ECCO_DEFAULT_DATA = {
       state.data.config.enderecoCompleto = document.getElementById("cmsEndereco").value.trim();
       state.data.config.whatsappNumero = document.getElementById("cmsWhatsapp").value.trim();
       state.data.config.emailOficial = document.getElementById("cmsEmail").value.trim();
+      state.data.config.logoUrl = document.getElementById("cmsLogoUrl").value.trim() || "logo-ecco.png";
 
       const novaOfNome = document.getElementById("cmsOfNome").value.trim();
       if (novaOfNome) {
@@ -2155,6 +2179,7 @@ const ECCO_DEFAULT_DATA = {
       }
 
       localStorage.setItem(STORAGE_KEY, JSON.stringify(state.data));
+      syncHeaderLogo();
       closeModal();
       renderCurrentPage();
     });
@@ -2173,6 +2198,7 @@ const ECCO_DEFAULT_DATA = {
     document.getElementById("cmsResetBtn").addEventListener("click", () => {
       localStorage.removeItem(STORAGE_KEY);
       state.data = JSON.parse(JSON.stringify(ECCO_DEFAULT_DATA));
+      syncHeaderLogo();
       closeModal();
       renderCurrentPage();
     });
