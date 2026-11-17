@@ -1,50 +1,70 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#070B24" />
+  <meta name="theme-color" content="#070B24" id="metaThemeColor" />
   <title>ECCO — Um espaço para experimentar a arte | Juiz de Fora/MG</title>
-  <meta name="description" content="O Ecco é um espaço independente de arte e experimentação em Juiz de Fora/MG. Aulas, oficinas, teatro, Galeria Subversivos e locação cultural." />
+  <meta
+    name="description"
+    content="O Ecco é um espaço independente de arte e experimentação em Juiz de Fora/MG. Aulas de teatro, pintura e violão, oficinas mensais, Teatro do Contra, Sala Iris Alves e Galeria Subversivos."
+  />
 
-  <!-- Tipografia Contemporânea e Editorial -->
+  <!-- Aplica o tema salvo antes da primeira renderização para evitar piscadas de tela -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem("ecco_theme_preference");
+        if (saved === "light" || saved === "dark") {
+          document.documentElement.setAttribute("data-theme", saved);
+          var meta = document.getElementById("metaThemeColor");
+          if (meta) meta.setAttribute("content", saved === "light" ? "#FFFFFF" : "#070B24");
+        }
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Tipografia Oficial -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap"
+    rel="stylesheet"
+  />
 
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Faixa superior de status editorial (Degradê Oficial da Logo) -->
-  <div class="editorial-bar" role="region" aria-label="Status editorial do projeto">
+  <!-- Barra Superior de Revisão Pré-Publicação -->
+  <div class="editorial-bar">
     <div class="container editorial-bar__inner">
-      <div class="editorial-bar__text">
-        <span class="editorial-bar__badge">VERSÃO EDITORIAL</span>
-        <p>Conteúdo oficial baseado no Documento-Mestre ECCO. Itens marcados como <strong>[PENDENTE]</strong> aguardam confirmação antes da publicação.</p>
-      </div>
-      <button type="button" class="editorial-bar__btn" id="openPendenciasBtn">Ver pendências (9)</button>
+      <span>
+        <strong>Versão de revisão pré-publicação:</strong> itens marcados como pendentes aguardam confirmação oficial do Ecco.
+      </span>
+      <button type="button" class="editorial-bar__btn" id="openPendenciasBtn">
+        Ver checklist de pendências
+      </button>
     </div>
   </div>
 
   <!-- Cabeçalho Principal -->
-  <header class="site-header" id="siteHeader">
+  <header class="site-header">
+    <div class="header-gradient-line" aria-hidden="true"></div>
     <div class="container header-inner">
-      <a href="#inicio" class="brand-logo" data-route="inicio" aria-label="ECCO — Página Inicial">
+      <a href="#inicio" data-route="inicio" class="brand-logo" aria-label="ECCO — Página Inicial">
         <span class="brand-logo__mark" aria-hidden="true">
-          <!-- Logotipo ECCO com degradê oficial (#0D1E7A -> #54126B -> #CE121E) e tipografia branca -->
-          <svg viewBox="0 0 180 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 120 80" width="54" height="36" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <linearGradient id="eccoBrandGrad" x1="0" y1="60" x2="180" y2="60" gradientUnits="userSpaceOnUse">
+              <linearGradient id="eccoLogoGrad" x1="0" y1="0" x2="120" y2="80" gradientUnits="userSpaceOnUse">
                 <stop offset="0%" stop-color="#0D1E7A" />
                 <stop offset="52%" stop-color="#54126B" />
                 <stop offset="100%" stop-color="#CE121E" />
               </linearGradient>
             </defs>
-            <rect width="180" height="120" rx="14" fill="url(#eccoBrandGrad)" />
-            <path d="M22 44L35 41V48L27 49.5V56.5L34 55.5V62L27 63V70.5L35 69V76L22 79V44Z" fill="#FFFFFF" />
-            <path d="M41 40L58 36V44.5L48 46.5V73.5L58 75.5V84L41 80V40Z" fill="#FFFFFF" />
-            <path d="M65 34.5L88 29V39L74.5 42V78L88 81V91L65 85.5V34.5Z" fill="#FFFFFF" />
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M97 26.5L130 17L158 31V89L130 103L97 93.5V26.5ZM113 36.5V83.5L128.5 88.5L142 81.5V38.5L128.5 31.5L113 36.5Z" fill="#FFFFFF" />
+            <rect width="120" height="80" fill="url(#eccoLogoGrad)" />
+            <circle cx="34" cy="40" r="16" stroke="#FFFFFF" stroke-width="4" />
+            <path d="M58 26H86M58 40H80M58 54H86" stroke="#FFFFFF" stroke-width="4" stroke-linecap="round" />
+            <circle cx="96" cy="40" r="5" fill="#FFFFFF" />
           </svg>
         </span>
         <span class="brand-logo__text">
@@ -53,7 +73,7 @@
         </span>
       </a>
 
-      <!-- Navegação Desktop -->
+      <!-- Navegação Desktop (9 Páginas) -->
       <nav class="desktop-nav" aria-label="Menu principal">
         <ul class="nav-list">
           <li><a href="#inicio" data-route="inicio" class="nav-link active">Início</a></li>
@@ -61,123 +81,159 @@
           <li><a href="#aulas" data-route="aulas" class="nav-link">Aulas</a></li>
           <li><a href="#oficinas" data-route="oficinas" class="nav-link">Oficinas</a></li>
           <li><a href="#teatro" data-route="teatro" class="nav-link">Teatro</a></li>
-          <li><a href="#subversivos" data-route="subversivos" class="nav-link">Galeria Subversivos</a></li>
+          <li><a href="#subversivos" data-route="subversivos" class="nav-link">Subversivos</a></li>
           <li><a href="#realize" data-route="realize" class="nav-link">Realize no Ecco</a></li>
           <li><a href="#agenda" data-route="agenda" class="nav-link">Agenda</a></li>
           <li><a href="#contato" data-route="contato" class="nav-link">Contato</a></li>
         </ul>
       </nav>
 
-      <!-- Botão Menu Mobile -->
-      <button type="button" class="mobile-toggle" id="mobileMenuBtn" aria-expanded="false" aria-controls="mobileDrawer" aria-label="Abrir menu de navegação">
-        <span class="mobile-toggle__line"></span>
-        <span class="mobile-toggle__line"></span>
-        <span class="mobile-toggle__line"></span>
-      </button>
+      <!-- Seletor de Tema (Escuro / Branco) + Botão Mobile -->
+      <div class="header-controls">
+        <button
+          type="button"
+          class="theme-toggle"
+          id="themeToggleBtn"
+          aria-label="Alternar entre tema escuro e tema branco"
+          title="Escolher aparência do site"
+        >
+          <span class="theme-toggle__icon" id="themeToggleIcon" aria-hidden="true"></span>
+          <span id="themeToggleLabel">Tema Branco</span>
+        </button>
+
+        <button
+          type="button"
+          class="mobile-toggle"
+          id="mobileMenuBtn"
+          aria-label="Abrir menu de navegação"
+          aria-expanded="false"
+          aria-controls="mobileDrawer"
+        >
+          <span class="mobile-toggle__line"></span>
+          <span class="mobile-toggle__line"></span>
+          <span class="mobile-toggle__line"></span>
+        </button>
+      </div>
     </div>
-    <div class="header-gradient-line" aria-hidden="true"></div>
   </header>
 
   <!-- Menu Mobile Drawer -->
   <div class="mobile-drawer" id="mobileDrawer" aria-hidden="true">
     <div class="mobile-drawer__backdrop" id="mobileDrawerBackdrop"></div>
-    <nav class="mobile-drawer__panel" aria-label="Menu mobile">
-      <div class="mobile-drawer__head">
-        <span class="mono-tag">NAVEGAÇÃO / ECCO</span>
-        <button type="button" class="mobile-drawer__close" id="mobileCloseBtn" aria-label="Fechar menu">✕</button>
+    <aside class="mobile-drawer__panel" aria-label="Menu mobile">
+      <div>
+        <div class="mobile-drawer__head">
+          <strong style="font-family: var(--font-display); font-size: 1.2rem;">ECCO</strong>
+          <button type="button" class="mobile-drawer__close" id="mobileCloseBtn" aria-label="Fechar menu">✕</button>
+        </div>
+
+        <!-- Seletor de Tema no Menu Mobile -->
+        <div class="mobile-theme-box">
+          <span class="mobile-theme-box__title">Aparência</span>
+          <div class="mobile-theme-switch" role="group" aria-label="Escolher tema do site">
+            <button type="button" class="mobile-theme-opt is-active" data-set-theme="dark">Escuro</button>
+            <button type="button" class="mobile-theme-opt" data-set-theme="light">Branco</button>
+          </div>
+        </div>
+
+        <ul class="mobile-nav-list">
+          <li><a href="#inicio" data-route="inicio" class="mobile-nav-link active">Início</a></li>
+          <li><a href="#o-ecco" data-route="o-ecco" class="mobile-nav-link">O Ecco</a></li>
+          <li><a href="#aulas" data-route="aulas" class="mobile-nav-link">Aulas</a></li>
+          <li><a href="#oficinas" data-route="oficinas" class="mobile-nav-link">Oficinas</a></li>
+          <li><a href="#teatro" data-route="teatro" class="mobile-nav-link">Teatro</a></li>
+          <li><a href="#subversivos" data-route="subversivos" class="mobile-nav-link">Galeria Subversivos</a></li>
+          <li><a href="#realize" data-route="realize" class="mobile-nav-link">Realize no Ecco</a></li>
+          <li><a href="#agenda" data-route="agenda" class="mobile-nav-link">Agenda</a></li>
+          <li><a href="#contato" data-route="contato" class="mobile-nav-link">Contato</a></li>
+        </ul>
       </div>
-      <ul class="mobile-nav-list">
-        <li><a href="#inicio" data-route="inicio" class="mobile-nav-link">01. Início</a></li>
-        <li><a href="#o-ecco" data-route="o-ecco" class="mobile-nav-link">02. O Ecco</a></li>
-        <li><a href="#aulas" data-route="aulas" class="mobile-nav-link">03. Aulas</a></li>
-        <li><a href="#oficinas" data-route="oficinas" class="mobile-nav-link">04. Oficinas</a></li>
-        <li><a href="#teatro" data-route="teatro" class="mobile-nav-link">05. Teatro</a></li>
-        <li><a href="#subversivos" data-route="subversivos" class="mobile-nav-link">06. Galeria Subversivos</a></li>
-        <li><a href="#realize" data-route="realize" class="mobile-nav-link">07. Realize no Ecco</a></li>
-        <li><a href="#agenda" data-route="agenda" class="mobile-nav-link">08. Agenda</a></li>
-        <li><a href="#contato" data-route="contato" class="mobile-nav-link">09. Contato</a></li>
-      </ul>
+
       <div class="mobile-drawer__footer">
-        <p>Um espaço para experimentar a arte.</p>
-        <p class="mono-small">Bairro Bandeirantes — Juiz de Fora/MG</p>
+        <p><strong>Bairro Bandeirantes</strong> • Juiz de Fora/MG</p>
+        <p style="color: var(--ink-muted);">Terça a sábado: 9h às 17h | Domingo: 10h às 12h</p>
       </div>
-    </nav>
+    </aside>
   </div>
 
-  <!-- Área Dinâmica das 9 Páginas -->
-  <main id="appRoot" tabindex="-1"></main>
+  <!-- Área Principal das Páginas -->
+  <main id="appRoot"></main>
 
   <!-- Rodapé Institucional -->
   <footer class="site-footer">
     <div class="footer-accent-line" aria-hidden="true"></div>
     <div class="container footer-grid">
-      <div class="footer-col footer-col--brand">
-        <div class="footer-brand">
-          <span class="footer-brand__title">ECCO</span>
-          <span class="footer-brand__sub">Um espaço para experimentar a arte.</span>
-        </div>
+      <div>
+        <span class="footer-brand__title">ECCO</span>
+        <span class="footer-brand__sub">Um espaço para experimentar a arte.</span>
         <p class="footer-desc">
-          Um espaço independente de arte e experimentação em Juiz de Fora/MG. Um lugar para aprender, criar, apresentar, experimentar e descobrir diferentes possibilidades artísticas.
+          Espaço independente de arte e experimentação fundado em 2024 por Melissa Coppe e Daniel Meotte em Juiz de Fora/MG.
         </p>
-        <div class="footer-social">
-          <a href="https://www.instagram.com/ecco.cultural/" target="_blank" rel="noopener noreferrer" class="social-pill">
-            Instagram @ecco.cultural ↗
-          </a>
-        </div>
+        <a
+          href="https://www.instagram.com/ecco.cultural/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="social-pill"
+        >
+          Instagram: @ecco.cultural ↗
+        </a>
       </div>
 
-      <div class="footer-col">
-        <h3 class="footer-heading">Explorar</h3>
+      <div>
+        <h3 class="footer-heading">Navegação</h3>
         <ul class="footer-links">
           <li><a href="#inicio" data-route="inicio">Início</a></li>
           <li><a href="#o-ecco" data-route="o-ecco">O Ecco</a></li>
-          <li><a href="#aulas" data-route="aulas">Aulas (Teatro, Pintura, Violão)</a></li>
-          <li><a href="#oficinas" data-route="oficinas">Oficinas Mensais</a></li>
+          <li><a href="#aulas" data-route="aulas">Aulas</a></li>
+          <li><a href="#oficinas" data-route="oficinas">Oficinas</a></li>
           <li><a href="#teatro" data-route="teatro">Teatro &amp; Sala Iris Alves</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h3 class="footer-heading">Circulação &amp; Espaço</h3>
-        <ul class="footer-links">
           <li><a href="#subversivos" data-route="subversivos">Galeria Subversivos</a></li>
-          <li><a href="#realize" data-route="realize">Realize no Ecco (Locação)</a></li>
-          <li><a href="#agenda" data-route="agenda">Agenda Geral</a></li>
-          <li><a href="#contato" data-route="contato">Contato &amp; Visitação</a></li>
+          <li><a href="#realize" data-route="realize">Realize no Ecco</a></li>
+          <li><a href="#agenda" data-route="agenda">Agenda</a></li>
+          <li><a href="#contato" data-route="contato">Contato</a></li>
         </ul>
       </div>
 
-      <div class="footer-col">
+      <div>
         <h3 class="footer-heading">Visitação da Galeria</h3>
         <ul class="footer-hours">
-          <li><strong>Terça a sábado:</strong> 9h às 17h</li>
+          <li><strong>Terça-feira a sábado:</strong> 9h às 17h</li>
           <li><strong>Domingo:</strong> 10h às 12h</li>
-          <li><strong>Localização:</strong> Bairro Bandeirantes, Juiz de Fora/MG <span class="pending-tag">[Endereço completo pendente]</span></li>
+          <li><strong>Segunda-feira:</strong> Fechado para visitação livre</li>
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="footer-heading">Localização &amp; Contato</h3>
+        <ul class="footer-hours">
+          <li>Bairro Bandeirantes, Juiz de Fora/MG</li>
+          <li><span class="pending-tag">[Endereço completo pendente]</span></li>
+          <li><span class="pending-tag">[WhatsApp oficial pendente]</span></li>
         </ul>
       </div>
     </div>
 
     <div class="container footer-bottom">
-      <p>© 2024–2026 ECCO — Espaço de Arte e Experimentação. Fundado em 9 de março de 2024 em Juiz de Fora/MG.</p>
+      <p>© ECCO — Espaço de Arte e Experimentação • Juiz de Fora/MG</p>
       <div class="footer-bottom__tools">
-        <button type="button" class="text-btn" id="openCmsBtn">Gestão de Conteúdo (CMS Local)</button>
-        <span aria-hidden="true">•</span>
-        <button type="button" class="text-btn" id="openPoliciesBtn">Políticas &amp; Pendências</button>
+        <button type="button" class="text-btn" id="openCmsBtn">Gerenciar conteúdo local (CMS)</button>
+        <span>•</span>
+        <button type="button" class="text-btn" id="openPoliciesBtn">Pendências de publicação</button>
       </div>
     </div>
   </footer>
 
-  <!-- Modal Universal (Detalhes Individuais, Checkout, WhatsApp/Propostas, CMS e Pendências) -->
-  <div class="modal" id="universalModal" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modalTitle">
+  <!-- Modal Universal -->
+  <div class="modal" id="universalModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="modal__backdrop" id="modalBackdrop"></div>
-    <div class="modal__dialog" role="document">
-      <header class="modal__header">
-        <div class="modal__header-text">
+    <div class="modal__dialog">
+      <div class="modal__header">
+        <div>
           <span class="mono-tag" id="modalEyebrow">ECCO</span>
           <h2 class="modal__title" id="modalTitle">Detalhes</h2>
         </div>
         <button type="button" class="modal__close" id="modalCloseBtn" aria-label="Fechar janela">✕</button>
-      </header>
+      </div>
       <div class="modal__body" id="modalBody"></div>
     </div>
   </div>

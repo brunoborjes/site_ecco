@@ -1,5 +1,5 @@
 /* ==========================================================================
-   ECCO — DADOS OFICIAIS DO DOCUMENTO-MESTRE + LÓGICA DO SITE (ROTEAMENTO, CMS E CHECKOUT)
+   ECCO — DADOS OFICIAIS DO DOCUMENTO-MESTRE + LÓGICA DO SITE (TEMAS, ROTEAMENTO, CMS E CHECKOUT)
    ========================================================================== */
 
 const ECCO_DEFAULT_DATA = {
@@ -289,6 +289,7 @@ const ECCO_DEFAULT_DATA = {
 
 (function () {
   const STORAGE_KEY = "ecco_cms_data_v1";
+  const THEME_KEY = "ecco_theme_preference";
 
   function loadEccoData() {
     try {
@@ -302,12 +303,66 @@ const ECCO_DEFAULT_DATA = {
     return JSON.parse(JSON.stringify(ECCO_DEFAULT_DATA));
   }
 
+  function loadSavedTheme() {
+    try {
+      const savedTheme = localStorage.getItem(THEME_KEY);
+      if (savedTheme === "light" || savedTheme === "dark") {
+        return savedTheme;
+      }
+    } catch (e) {
+      // fallback seguro
+    }
+    return "dark";
+  }
+
   let state = {
     data: loadEccoData(),
+    theme: loadSavedTheme(),
     currentRoute: "inicio",
     agendaFiltro: "Todos",
     agendaPeriodo: "proximas"
   };
+
+  /* --------------------------------------------------------------------------
+     GERENCIADOR DE TEMA (ESCURO / BRANCO COM CORES DA LOGO)
+     -------------------------------------------------------------------------- */
+  const SUN_SVG = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>`;
+  const MOON_SVG = `<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>`;
+
+  function applyTheme(theme) {
+    const validTheme = theme === "light" ? "light" : "dark";
+    state.theme = validTheme;
+    document.documentElement.setAttribute("data-theme", validTheme);
+
+    const metaTheme = document.getElementById("metaThemeColor");
+    if (metaTheme) {
+      metaTheme.setAttribute("content", validTheme === "light" ? "#FFFFFF" : "#070B24");
+    }
+
+    const toggleIcon = document.getElementById("themeToggleIcon");
+    const toggleLabel = document.getElementById("themeToggleLabel");
+    if (toggleIcon && toggleLabel) {
+      if (validTheme === "dark") {
+        toggleIcon.innerHTML = SUN_SVG;
+        toggleLabel.textContent = "Tema Branco";
+      } else {
+        toggleIcon.innerHTML = MOON_SVG;
+        toggleLabel.textContent = "Tema Escuro";
+      }
+    }
+
+    document.querySelectorAll("[data-set-theme]").forEach((btn) => {
+      btn.classList.toggle("is-active", btn.getAttribute("data-set-theme") === validTheme);
+    });
+
+    try {
+      localStorage.setItem(THEME_KEY, validTheme);
+    } catch (e) {
+      // ignora erro de armazenamento
+    }
+  }
+
+  applyTheme(state.theme);
 
   const appRoot = document.getElementById("appRoot");
   const modal = document.getElementById("universalModal");
@@ -635,7 +690,7 @@ const ECCO_DEFAULT_DATA = {
             </div>
             <div class="gradient-banner__cta" style="flex-direction: column; gap: 10px;">
               <a href="#realize" data-route="realize" class="btn btn--white">Realize no Ecco (Locação)</a>
-              <button type="button" class="btn btn--outline" style="border-color: #fff; color: #fff;" data-proposta="geral">Enviar proposta artística</button>
+              <button type="button" class="btn btn--outline" style="background: rgba(255,255,255,0.12); border-color: #fff; color: #fff;" data-proposta="geral">Enviar proposta artística</button>
             </div>
           </div>
         </div>
@@ -656,7 +711,7 @@ const ECCO_DEFAULT_DATA = {
               <div class="value-box__line"></div>
               <h3>Localização</h3>
               <p>Bairro Bandeirantes, Juiz de Fora/MG.</p>
-              <span class="pending-tag" style="margin-top: 8px;">Endereço completo pendente</span>
+              <span class="pending-tag" style="margin-top: 10px;">Endereço completo pendente</span>
             </div>
             <div class="value-box">
               <div class="value-box__line"></div>
@@ -672,7 +727,7 @@ const ECCO_DEFAULT_DATA = {
               <div class="value-box__line"></div>
               <h3>Canais Oficiais</h3>
               <p>Instagram: <a href="${escapeHtml(config.instagramUrl)}" target="_blank" rel="noopener noreferrer" style="text-decoration: underline;">@ecco.cultural</a></p>
-              <span class="pending-tag" style="margin-top: 8px;">WhatsApp e e-mail pendentes</span>
+              <span class="pending-tag" style="margin-top: 10px;">WhatsApp e e-mail pendentes</span>
             </div>
           </div>
         </div>
@@ -791,7 +846,7 @@ const ECCO_DEFAULT_DATA = {
                   <h3>${escapeHtml(pessoa.nome)}</h3>
                   <span class="founder-card__role">${escapeHtml(pessoa.papel)}</span>
                   <div class="bio-placeholder">
-                    <span class="pending-tag" style="margin-bottom: 8px;">[BIOGRAFIA PENDENTE]</span>
+                    <span class="pending-tag" style="margin-bottom: 10px;">[BIOGRAFIA PENDENTE]</span>
                     <p style="margin: 0;">${escapeHtml(pessoa.biografiaStatus)}</p>
                   </div>
                 </div>
@@ -839,7 +894,7 @@ const ECCO_DEFAULT_DATA = {
             <article class="modality-block">
               <div>
                 <span class="mono-tag">MODALIDADE</span>
-                <h2 style="font-size: clamp(1.7rem, 3vw, 2.1rem); margin-top: 6px;">${escapeHtml(mod.nome)}</h2>
+                <h2 style="font-size: clamp(1.7rem, 3vw, 2.15rem); margin-top: 6px;">${escapeHtml(mod.nome)}</h2>
                 <p class="modality-block__tagline">${escapeHtml(mod.chamada)}</p>
                 ${mod.paragrafos.map((p) => `<p style="color: var(--ink-secondary);">${escapeHtml(p)}</p>`).join("")}
                 <div style="margin-top: 20px;">
@@ -930,7 +985,7 @@ const ECCO_DEFAULT_DATA = {
               <p>
                 Entre em contato, conheça nossas turmas e encontre seu espaço para criar no Ecco. <strong>Não existe taxa de matrícula.</strong>
               </p>
-              <p style="font-size: 0.84rem; margin-top: 10px; opacity: 0.9;">
+              <p style="font-size: 0.85rem; margin-top: 10px; opacity: 0.92;">
                 * Observação: Regras específicas de reposição, vencimento e contratação serão confirmadas antes da publicação.
               </p>
             </div>
@@ -1660,7 +1715,7 @@ const ECCO_DEFAULT_DATA = {
         <div class="container contact-grid">
           <div class="contact-card">
             <span class="mono-tag">INFORMAÇÕES OFICIAIS</span>
-            <h2 style="font-size: clamp(1.5rem, 3vw, 1.8rem); margin: 8px 0 16px;">Onde estamos e canais</h2>
+            <h2 style="font-size: clamp(1.5rem, 3vw, 1.85rem); margin: 8px 0 16px;">Onde estamos e canais</h2>
 
             <ul class="contact-list">
               <li>
@@ -1846,7 +1901,7 @@ const ECCO_DEFAULT_DATA = {
             </div>
           </div>
 
-          <label style="display: block; font-size: 0.84rem; font-weight: 600; color: var(--ink-secondary); margin-top: 6px;">Meio de pagamento desejado *</label>
+          <label style="display: block; font-size: 0.85rem; font-weight: 600; color: var(--ink-secondary); margin-top: 6px;">Meio de pagamento desejado *</label>
           <div class="payment-methods">
             <label class="payment-option">
               <input type="radio" name="payMethod" value="Pix" checked />
@@ -2021,7 +2076,7 @@ const ECCO_DEFAULT_DATA = {
           Atualize aqui os dados institucionais pendentes e as oficinas. As alterações ficam salvas no navegador e você pode exportar o JSON de configuração atualizado.
         </p>
 
-        <h3 style="font-size: 1.1rem; margin: 18px 0 10px;">1. Dados Institucionais Pendentes</h3>
+        <h3 style="font-size: 1.12rem; margin: 18px 0 10px;">1. Dados Institucionais Pendentes</h3>
         <div class="form-grid">
           <div class="form-field">
             <label>Endereço Completo (Bairro Bandeirantes)</label>
@@ -2037,7 +2092,7 @@ const ECCO_DEFAULT_DATA = {
           <input type="email" id="cmsEmail" value="${escapeHtml(config.emailOficial)}" placeholder="contato@..." />
         </div>
 
-        <h3 style="font-size: 1.1rem; margin: 22px 0 10px;">2. Adicionar Nova Oficina Mensal</h3>
+        <h3 style="font-size: 1.12rem; margin: 22px 0 10px;">2. Adicionar Nova Oficina Mensal</h3>
         <div class="form-grid">
           <div class="form-field">
             <label>Nome da Oficina</label>
@@ -2131,7 +2186,7 @@ const ECCO_DEFAULT_DATA = {
         <p style="color: var(--ink-secondary); margin-top: 0;">
           Em conformidade com as regras editoriais do Ecco, nenhuma informação provisória foi publicada como definitiva. Confira os pontos que aguardam confirmação:
         </p>
-        <ol style="padding-left: 20px; display: flex; flex-direction: column; gap: 10px; color: var(--ink-secondary);">
+        <ol style="padding-left: 20px; display: flex; flex-direction: column; gap: 10px; line-height: 1.6; color: var(--ink-secondary);">
           ${state.data.pendenciasPublicacao.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
         </ol>
       `
@@ -2207,7 +2262,7 @@ const ECCO_DEFAULT_DATA = {
   }
 
   /* --------------------------------------------------------------------------
-     MENU MOBILE E INICIALIZAÇÃO GLOBAL
+     MENU MOBILE, ALTERNÂNCIA DE TEMA E INICIALIZAÇÃO GLOBAL
      -------------------------------------------------------------------------- */
   const mobileDrawer = document.getElementById("mobileDrawer");
   const mobileMenuBtn = document.getElementById("mobileMenuBtn");
@@ -2227,6 +2282,19 @@ const ECCO_DEFAULT_DATA = {
     mobileMenuBtn.setAttribute("aria-expanded", "false");
     document.body.style.overflow = "";
   }
+
+  const themeToggleBtn = document.getElementById("themeToggleBtn");
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener("click", () => {
+      applyTheme(state.theme === "dark" ? "light" : "dark");
+    });
+  }
+
+  document.querySelectorAll("[data-set-theme]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      applyTheme(btn.getAttribute("data-set-theme"));
+    });
+  });
 
   mobileMenuBtn.addEventListener("click", () => {
     if (mobileDrawer.classList.contains("is-open")) {
